@@ -359,7 +359,7 @@ try {
 					$($thumbnailContainerTemplate).appendTo(".gallery-thumbList");
 					
 					$(".thumb-image").each( function( i ) {
-								
+													
 						if ( i == 0 ) {
 							$(this).attr( "class", "thumbList-image active-thumbImage" );
 							$(this).appendTo(".thumbnail-container");
@@ -367,7 +367,8 @@ try {
 							$(this).attr( "class", "thumbList-image" );
 							$(this).appendTo(".thumbnail-container");	
 						}
-							
+						
+
 					});
 							
 					methods.reinitializeValues();

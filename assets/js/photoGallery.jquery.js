@@ -128,11 +128,11 @@ try {
 						var newImage = new Image();
 						newImage.src  = ( $(this).attr("href") ); // Assign the source of the image into imageObject src attribute 
 						newImage.onload = function() {
-							//console.log( preloadCounter + "..." );
+							console.log( preloadCounter + "..." );
 							preloadCounter++;
 							
 							if ( preloadCounter < numberOfImages ) {
-								$(".preloader").fadeOut(400);
+								$(".preloader").remove();
 							}
 						}
 					});

@@ -590,7 +590,8 @@ try {
 				if ( options ) { // Check if there an extended options for settings
 					$.extend( settings, options ); // Extend the settings' attributes value or override it  
 					methods.reinitializeEndOfSection();
-				} 
+				}
+				 
 				methods.init(); // Initialize the photo gallery
 			});
 			

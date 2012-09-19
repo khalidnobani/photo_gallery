@@ -213,12 +213,13 @@ body {
 
 /* Image Title */
 .imageViewer-title {
-	width: 98%;
+	background: rgba(0, 0, 0, 0.6);
+	bottom: 0;
+	color: white;
 	height: 2.0em;
 	position: absolute;
-	bottom: 0;
 	text-align: center;
-	color: white;
 	text-shadow: 0 1px 4px black;
-	background: rgba(0, 0, 0, 0.6);
+	padding:0.5em 0;
+	width: 100%;
 }

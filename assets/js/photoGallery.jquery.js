@@ -38,7 +38,7 @@ try {
 				numberOfImagesInGroup: $(".thumb-image[rel='group1']").length || $(".thumbList-image[rel='group1']").length
 			},
 			clicked = false,
-			$imageViewerContainerTemplate = $("<div id='image-viewer' class='line hideItem' > <span class='exit-gallery'></span> <img id='viewer-content' /></div>"),
+			$imageViewerContainerTemplate = $("<div id='image-viewer' class='line hideItem' > <span class='exit-gallery'></span> <img id='viewer-content' /> <div class='image-title'>Image 12</div></div>"),
 			$imageTransitionArrowTemplate = "<span class='prev-image imageTransition-icon'> <img alt='previous image' src='assets/img/prev-image.png' > </span>" +
 			"<span class='next-image imageTransition-icon'> <img alt='next image' src='assets/img/next-image.png' > </span>",
 			$indicationContentTemplate = " <div class='line indication-content middleColor'> " +

@@ -24,7 +24,7 @@ try {
 			arrayOfImages = [],
 			preloadCounter = 1;
 			defaults = {
-				scrollAmmount: 750,
+				scrollAmmount: 750, 
 				currentSection: 1,	
 				numberOfImages: numberOfImages,
 				totalThumbWidth: totalThumbWidth,
@@ -38,7 +38,7 @@ try {
 				numberOfImagesInGroup: $(".thumb-image[rel='group1']").length || $(".thumbList-image[rel='group1']").length
 			},
 			clicked = false,
-			$imageViewerContainerTemplate = $("<div id='image-viewer' class='line hideItem' > <img id='viewer-content' /></div>", {}),
+			$imageViewerContainerTemplate = $("<div id='image-viewer' class='line hideItem' > <span class='exit-gallery'></span> <img id='viewer-content' /></div>"),
 			$imageTransitionArrowTemplate = "<span class='prev-image imageTransition-icon'> <img alt='previous image' src='assets/img/prev-image.png' > </span>" +
 			"<span class='next-image imageTransition-icon'> <img alt='next image' src='assets/img/next-image.png' > </span>",
 			$indicationContentTemplate = " <div class='line indication-content middleColor'> " +
@@ -279,6 +279,7 @@ try {
 				removeNonActiveImages: function() {
 					
 					$(".thumb-image").removeClass("active-thumbImage");
+					$(".thumbList-image").removeClass("active-thumbImage");
 					
 				},
 				showImageTitle: function( element ) {
@@ -474,10 +475,13 @@ try {
 					$(".view-filmstrip").live( "click", methods.switchToFilmstripView );
 					
 				},
+				closeImageViewerOnClick: function () {
+					methods.closeImageViewer();
+				},
 				closeImageViewerOnEscapePress: function( event ){
 					
 					if ( event.which == 27 ) {
-							methods.closeImageViewer();
+						methods.closeImageViewer();
 					}	
 					
 				},
@@ -487,6 +491,9 @@ try {
 						methods.closeImageViewerOnEscapePress( event );
 					}); 	
 					
+				},
+				bindExitGalleryClick: function () {
+					$(".exit-gallery").live("click", methods.closeImageViewerOnClick)
 				},
 				positioningPrevImage: function() {
 					
@@ -548,6 +555,7 @@ try {
 					this.bindViewThumbnailClick(); // 7
 					this.bindViewFilmstripClick(); // 8
 					this.bindEscapePress(); // 9
+					this.bindExitGalleryClick(); // 10
 					
 				},
 				appendImageTransitionArrow: function( template ) {

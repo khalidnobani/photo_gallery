@@ -80,7 +80,8 @@ body {
 }
 
 /* thumb image */
-.thumb-image {
+.thumb-image,
+.thumbList-image {
 	display: inline-block;
 	border-bottom: 6px solid transparent;
 	position: relative;
@@ -111,12 +112,8 @@ body {
 	position: relative;
 }
 
-.gallery-thumbList > a,
 .t > a  {
-	display: inline-block;
-	float:left;
 	margin: 0.4em 0.2em;
-	text-align: center;
 }
 
 /* Viewer content */
@@ -203,4 +200,13 @@ body {
 	display: inline-block;
 }
 
-
+/* exit gallery */
+.exit-gallery {
+	background: url(../img/exit-gallery.png) no-repeat;
+	height: 24px;
+	position: absolute;
+	right: 15px;
+	top: 15px;
+	width: 24px;
+	cursor: pointer;
+}

@@ -298,11 +298,21 @@ try {
 				activateImage: function( type ) {
 							
 					if (type == "next" ) {
-						this.showActiveImage( activedImage.next() );
-						this.showImageTitle( activedImage.next() );
+						if ($(".photo-gallery").hasClass("thumbnail-view")) {
+							
+						} else {
+							this.showActiveImage( activedImage.next() );
+							this.showImageTitle( activedImage.next() );	
+						}
+						
 					} else if ( type == "prev" ) {
-						this.showActiveImage( activedImage.prev() );
-						this.showImageTitle( activedImage.prev() );
+						if ($(".photo-gallery").hasClass("thumbnail-view")) {
+							
+						} else {
+							this.showActiveImage( activedImage.prev() );
+							this.showImageTitle( activedImage.prev() );	
+						}
+						
 					}
 							
 				},

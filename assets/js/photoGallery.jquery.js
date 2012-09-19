@@ -96,7 +96,7 @@ try {
 					}, speed );
 				},
 				reinitializeEndOfSection: function() { // Reinitialize the value of endOfSection property
-					defaults.endOfSection = ( $( "#photo-gallery" ).hasClass("filmstrip-view") ) ? Math.ceil( numberOfImages / settings.numberOfImagesInSection ) : Math.ceil( $(".thumbnail-container").length );	
+					defaults.endOfSection = ( $( "#photo-gallery" ).hasClass("filmstrip-view") ) ? Math.ceil( numberOfImages / settings.numberOfImagesInSection ) : Math.ceil( numberOfImages / 12 );	
 				},
 				assignNewWidthToGalleryThumb: function() {
 					
@@ -110,7 +110,7 @@ try {
 					
 				},
 				reinitializeValues: function() { // Reinitialize all values needed for updating the gallery state
-					this.showImageTitle( defaults.firstImageTitle );
+					this.showImageTitle(defaults.firstImageTitle);
 					this.restoreToDefaultState(400);
 					this.reinitializeEndOfSection();
 					this.assignNewWidthToGalleryThumb();
@@ -128,10 +128,11 @@ try {
 						var newImage = new Image();
 						newImage.src  = ( $(this).attr("href") ); // Assign the source of the image into imageObject src attribute 
 						newImage.onload = function() {
+							//console.log( preloadCounter + "..." );
 							preloadCounter++;
-							console.log( preloadCounter );
-							if ( preloadCounter == 8 ) {
-								$(".preloader").remove();
+							
+							if ( preloadCounter < numberOfImages ) {
+								$(".preloader").fadeOut(400);
 							}
 						}
 					});
@@ -281,9 +282,11 @@ try {
 					
 				},
 				showImageTitle: function( element ) {
-					var title; console.log("Type of this element is " + typeof(element) );
+					var title; 
+					//console.log("Type of this element is " + typeof(element) );
 					if ( typeof(element) === "object" ) {
 						title = element.children().attr("title") || element.attr("title");
+						console.log("Type of this image "+element.attr("href"));
 					} else if( typeof(element) === "string" ) {
 						title = element;
 					}
@@ -297,7 +300,7 @@ try {
 						this.showImageTitle( activedImage.next() );
 					} else if ( type == "prev" ) {
 						this.showActiveImage( activedImage.prev() );
-						this.showImageTitle( activedImage.next() );
+						this.showImageTitle( activedImage.prev() );
 					}
 							
 				},
@@ -350,26 +353,26 @@ try {
 					$( "#image-viewer" ).find( "#viewer-content" ).attr( "src", $(".thumbList-image:first-child").attr("href") );
 	
 					$("#photo-gallery").removeClass("filmstrip-view").addClass("thumbnail-view").addClass("line").addClass("lightBlue");	
-					
-					$( ".gallery-thumb").attr( "class", "gallery-thumbList" );
-					$( ".gallery-thumbList" ).animate({
-							"height" : "auto"
-					}, "fast");
-					
-					$($thumbnailContainerTemplate).appendTo(".gallery-thumbList");
+										
+					//$($thumbnailContainerTemplate).appendTo(".gallery-thumbList");
 					
 					$(".thumb-image").each( function( i ) {
 													
 						if ( i == 0 ) {
 							$(this).attr( "class", "thumbList-image active-thumbImage" );
-							$(this).appendTo(".thumbnail-container");
+							//$(this).appendTo(".thumbnail-container");
 						} else {
 							$(this).attr( "class", "thumbList-image" );
-							$(this).appendTo(".thumbnail-container");	
+							//$(this).appendTo(".thumbnail-container");	
 						}
 						
 
 					});
+					
+					$( ".gallery-thumb").attr( "class", "gallery-thumbList" );
+					$( ".gallery-thumbList" ).animate({
+							"height" : "auto"
+					}, "fast");
 							
 					methods.reinitializeValues();
 					
@@ -394,16 +397,7 @@ try {
 					currentImage.attr( "src", defaults.firstImage );
 					
 					$("#photo-gallery").removeClass("thumbnail-view").addClass("filmstrip-view").addClass("line").addClass("lightBlue");
-					
-					$( ".gallery-thumbList").attr( "class", "gallery-thumb" ).css({
-						"height": "auto"
-					});
-					$( ".gallery-thumbList" ).animate({
-							"height" : "auto"
-					}, 300);
-					
-					
-					
+
 					$(".thumbList-image").each( function( i ) {
 							
 						if ( i == 0 ) {
@@ -415,6 +409,14 @@ try {
 						}
 								
 					});
+					
+					$( ".gallery-thumbList").attr( "class", "gallery-thumb" ).css({
+						"height": "auto"
+					});
+					$( ".gallery-thumbList" ).animate({
+							"height" : "auto"
+					}, 300);
+					
 					$(".thumbnail-container").remove();
 					
 					methods.reinitializeValues();

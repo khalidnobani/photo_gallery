@@ -92,13 +92,6 @@ body {
 	
 }
 
-/* Gallery Thumblist */
-.gallery-thumbList {
-	margin: auto;
-	text-align: center;
-	overflow: hidden;
-}
-
 /* Image viewer */
 #image-viewer,
 .preloader {
@@ -113,9 +106,15 @@ body {
 
 /* Gallery thumbList */
 .gallery-thumbList {
-	height: 320px;
-	padding: 25px 4px	;
+	overflow: auto;
+	padding: 25px 4px;
 	position: relative;
+}
+
+.gallery-thumbList > a {
+	display: inline-block;
+	float:left;
+	margin: 0.4em 0.2em;
 }
 
 /* Viewer content */
@@ -202,7 +201,4 @@ body {
 	
 }
 
-.thumbnail-container > a {
-	display: inline-block;
-	margin: 0.4em 0.2em;
-}
+

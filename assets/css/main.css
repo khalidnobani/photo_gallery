@@ -111,10 +111,12 @@ body {
 	position: relative;
 }
 
-.gallery-thumbList > a {
+.gallery-thumbList > a,
+.t > a  {
 	display: inline-block;
 	float:left;
 	margin: 0.4em 0.2em;
+	text-align: center;
 }
 
 /* Viewer content */
@@ -194,7 +196,7 @@ body {
 
 /* Thumbail-container */
 .t {
-	height: auto;
+	height: 500px;
 	overflow: hidden;
 	padding: 10px;
 	width: 730px;

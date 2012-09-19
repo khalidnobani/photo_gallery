@@ -286,7 +286,7 @@ try {
 					//console.log("Type of this element is " + typeof(element) );
 					if ( typeof(element) === "object" ) {
 						title = element.children().attr("title") || element.attr("title");
-						console.log("Type of this image "+element.attr("href"));
+						//console.log("Type of this image "+element.attr("href"));
 					} else if( typeof(element) === "string" ) {
 						title = element;
 					}
@@ -357,56 +357,51 @@ try {
 					//$($thumbnailContainerTemplate).appendTo(".gallery-thumbList");
 					
 					$(".thumb-image").each( function( i ) {
-						
-						
-													
-						if ( i == 0 ) {
-							$(this).attr( "class", "thumbList-image active-thumbImage" );
-							//$(this).appendTo(".thumbnail-container");
-						} else {
-							$(this).attr( "class", "thumbList-image" );
-							//$(this).appendTo(".thumbnail-container");	
-						}
-						
+	
+						$(this).attr( "class", "thumbList-image" );					
 
 					});
 					
 					$( ".gallery-thumb").attr( "class", "gallery-thumbList" );
 					/* New code */
 					
-					var thumbnailsContainerTemplate = $("<div class='t'></div>"),
-						templateIndex = 0, // This variable to stroe the index of template 
+					var templateIndex = 0, // This variable to stroe the index of template 
 						numberOfTemplates = numberOfImages / 12, // This variable to store the number of templates for thumbnails' images
 						templateArray = [],
 						maxHeight = 0;
 					
-					for (var i=0; i < numberOfTemplates; i++) {
+					if (!($(".t").length)) {
+						
+						for (var i=0; i < numberOfTemplates; i++) {
 						templateArray[i] = $("<div class='t'></div>");
 						templateArray[i].appendTo(".gallery-thumbList");
-					}	
+						}	
 					
-					console.log("numberOfImages : " + numberOfImages );
-					
-					$(".thumbList-image").each(function (i) {
-						if (i % 12 === 0 && i !=0) {
-							templateIndex++;
-						}
+						console.log("numberOfImages : " + numberOfImages );
 						
-						templateArray[templateIndex].append($(this));
-					
-					});
-					
-					for ( var i=0; i < templateArray.length; i++ ) {
-						if ( maxHeight < templateArray[i].height() ) {
-							maxHeight = templateArray[i].height();
-						} else {
-							maxHeight = maxHeight;
+						$(".thumbList-image").each(function (i) {
+							if ( i == 0 ) {
+								$(this).attr( "class", "thumbList-image" );		
+							}
+							if (i % 12 === 0 && i !=0) {
+								templateIndex++;
+							}
+							
+							templateArray[templateIndex].append($(this));
+						
+						});
+						
+						for ( var i=0; i < templateArray.length; i++ ) {
+							if ( maxHeight < templateArray[i].height() ) {
+								maxHeight = templateArray[i].height();
+							} else {
+								maxHeight = maxHeight;
+							}
 						}
+						console.log(maxHeight);
+						
 					}
-					console.log(maxHeight);
-					$(".t").css({
-						"heigth": maxHeight +"px"
-					});
+					
 					
 					/* End of New Code */
 					$( ".gallery-thumbList" ).animate({

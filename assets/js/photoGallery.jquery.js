@@ -59,8 +59,14 @@ try {
 				"</div>",
 			$galleryViewerTemplate = "<div class='gallery-viewer'> <!-- Beginning of gallery-viewer container -->" +
 				"<img alt='Large Image' title='Large Image' src='' id='viewer-image' />" +
- 				"</div> <!-- End of gallery-viewer container -->",
+ 				"</div> <!-- End of gallery-viewer container -->"
+ 			,
  			$thumbnailContainerTemplate = "<div class='thumbnail-container'></div>",
+ 			$preloaderTemplate = "<div class='preloader'> "+
+				"<img alt='Preloader' title='Photo Gallery Preloader' src='assets/img/loader.gif' class='preloader-image'/>" +
+				"<p class='preloader-text'>Loading</p>"+ 
+				"</div>"
+			,
 			imageGalleryObject = {
 				galleryViewer : {
 					height: 0,
@@ -574,9 +580,17 @@ try {
 					$("#image-viewer").append(template);
 					$( $alternateViewTemplate ).prependTo( "#photo-gallery" );
 					$( $indicationContentTemplate ).insertAfter('.gallery-viewer');
+				}, /* 19/09/2012 */
+				appendPreloaderTemplate: function (template) {
+					$("#photo-gallery").append(template);
 				},
 				appendTemplateIntoPage: function() {
 					this.appendImageTransitionArrow( $imageTransitionArrowTemplate );
+					this.appendPreloaderTemplate($preloaderTemplate);
+					this.appendGalleryViewerTemplate($galleryViewerTemplate);
+				},
+				appendGalleryViewerTemplate: function (template) {
+					$("#photo-gallery").append(template);	
 				},
 				init: function() {
 					
@@ -603,6 +617,7 @@ try {
 				}
 				 
 				methods.init(); // Initialize the photo gallery
+				methods.switchToThumbnailView();
 			});
 			
 		};

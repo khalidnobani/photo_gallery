@@ -357,6 +357,8 @@ try {
 					//$($thumbnailContainerTemplate).appendTo(".gallery-thumbList");
 					
 					$(".thumb-image").each( function( i ) {
+						
+						
 													
 						if ( i == 0 ) {
 							$(this).attr( "class", "thumbList-image active-thumbImage" );
@@ -370,6 +372,43 @@ try {
 					});
 					
 					$( ".gallery-thumb").attr( "class", "gallery-thumbList" );
+					/* New code */
+					
+					var thumbnailsContainerTemplate = $("<div class='t'></div>"),
+						templateIndex = 0, // This variable to stroe the index of template 
+						numberOfTemplates = numberOfImages / 12, // This variable to store the number of templates for thumbnails' images
+						templateArray = [],
+						maxHeight = 0;
+					
+					for (var i=0; i < numberOfTemplates; i++) {
+						templateArray[i] = $("<div class='t'></div>");
+						templateArray[i].appendTo(".gallery-thumbList");
+					}	
+					
+					console.log("numberOfImages : " + numberOfImages );
+					
+					$(".thumbList-image").each(function (i) {
+						if (i % 12 === 0 && i !=0) {
+							templateIndex++;
+						}
+						
+						templateArray[templateIndex].append($(this));
+					
+					});
+					
+					for ( var i=0; i < templateArray.length; i++ ) {
+						if ( maxHeight < templateArray[i].height() ) {
+							maxHeight = templateArray[i].height();
+						} else {
+							maxHeight = maxHeight;
+						}
+					}
+					console.log(maxHeight);
+					$(".t").css({
+						"heigth": maxHeight +"px"
+					});
+					
+					/* End of New Code */
 					$( ".gallery-thumbList" ).animate({
 							"height" : "auto"
 					}, "fast");
@@ -397,15 +436,15 @@ try {
 					currentImage.attr( "src", defaults.firstImage );
 					
 					$("#photo-gallery").removeClass("thumbnail-view").addClass("filmstrip-view").addClass("line").addClass("lightBlue");
-
+					
+				
+					
 					$(".thumbList-image").each( function( i ) {
 							
 						if ( i == 0 ) {
 							$(this).attr( "class", "thumb-image active-thumbImage" );
-							$(this).appendTo(".gallery-thumb");
 						} else {
 							$(this).attr( "class", "thumb-image" );
-							$(this).appendTo(".gallery-thumb");
 						}
 								
 					});
@@ -413,6 +452,13 @@ try {
 					$( ".gallery-thumbList").attr( "class", "gallery-thumb" ).css({
 						"height": "auto"
 					});
+					
+					$(".thumb-image").each(function () {
+						$(this).appendTo(".gallery-thumb");
+					});
+					
+					$(".t").remove();
+					
 					$( ".gallery-thumbList" ).animate({
 							"height" : "auto"
 					}, 300);

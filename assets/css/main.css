@@ -43,9 +43,9 @@ body {
 /* Photo gallery component */
 #photo-gallery {
 	margin:auto;
+	overflow: hidden;
 	position: relative;
 	width: 750px;
-	height: 600px;
 }
 
 /* Gallery-header */
@@ -65,7 +65,7 @@ body {
 }
 
 .gallery-viewer > img {
-	height: 100%;
+	height: auto;
 	width: 100%;
 }
 
@@ -190,7 +190,7 @@ body {
 
 /* Thumbail-container */
 .t {
-	height: 500px;
+	height: auto;
 	overflow: hidden;
 	padding: 10px;
 	width: 730px;

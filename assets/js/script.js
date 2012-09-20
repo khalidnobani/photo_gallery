@@ -1,6 +1,6 @@
 $(document).ready( function() {
 	$("#photo-gallery").photoGallery({
-		"secTransition": 600,
-		"numberOfImagesInSection": 8
+		"secTransition": 600
+		// "numberOfImagesInSection": 10
 	});
 });

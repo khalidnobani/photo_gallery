@@ -7,7 +7,7 @@ try {
 	(function( $ ) {
 		var	settings = {
 				sectTransition: 500,
-				numberOfImagesInSection: 5,
+				numberOfImagesInSection: 10,
 				numberOfImagesInThumnailSection: 30
 			},
 			numberOfImages = $( ".gallery-thumb" ).find("img").length || $( ".gallery-thumbList" ).find("img").length,

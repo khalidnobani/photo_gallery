@@ -627,10 +627,10 @@ try {
 					this.appendImageTransitionArrow( $imageTransitionArrowTemplate );
 					this.appendPreloaderTemplate($preloaderTemplate);
 					//this.appendGalleryViewerTemplate($galleryViewerTemplate);
-				},/*
+				},
 				appendGalleryViewerTemplate: function (template) {
 					//$("#photo-gallery").append(template);	
-				},*/
+				},
 				init: function() {
 					
 					$imageViewerContainerTemplate.appendTo("#photo-gallery"); // 1 

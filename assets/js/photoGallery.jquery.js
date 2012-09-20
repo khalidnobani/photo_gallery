@@ -485,7 +485,7 @@ try {
 					var element = $(".gallery-viewer");	
 	
 					clicked = false;
-	
+					
 					currentImage.attr( "src", defaults.firstImage );
 					
 					$("#photo-gallery").removeClass("thumbnail-view").addClass("filmstrip-view").addClass("line").addClass("lightBlue");
@@ -626,10 +626,10 @@ try {
 				appendTemplateIntoPage: function() {
 					this.appendImageTransitionArrow( $imageTransitionArrowTemplate );
 					this.appendPreloaderTemplate($preloaderTemplate);
-					//this.appendGalleryViewerTemplate($galleryViewerTemplate);
+					
 				},
 				appendGalleryViewerTemplate: function (template) {
-					//$("#photo-gallery").append(template);	
+					$("#photo-gallery").append(template);	
 				},
 				init: function() {
 					

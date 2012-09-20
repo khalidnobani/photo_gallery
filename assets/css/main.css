@@ -147,13 +147,10 @@ body {
 
 .prev-image,
 .next-image {
-	background: white;
-	border-radius: 50%;
 	cursor: pointer;
 	display: inline-block;
 	height: 48px;
 	width: 48px;
-	opacity: 0.9;
 	position: absolute;
 	top: 184px;
 }

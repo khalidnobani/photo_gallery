@@ -7,12 +7,13 @@ try {
 	(function( $ ) {
 		var	settings = {
 				sectTransition: 500,
-				numberOfImagesInSection: 5
+				numberOfImagesInSection: 5,
+				numberOfImagesInThumnailSection: 30
 			},
 			numberOfImages = $( ".gallery-thumb" ).find("img").length || $( ".gallery-thumbList" ).find("img").length,
 			sizeOfThumbnail = 100 / settings.numberOfImagesInSection,
 			totalThumbWidth = numberOfImages * ( $(".thumb-image img").width() ),
-			endOfSection = ( $( "#photo-gallery" ).hasClass("filmstrip-view") ) ? Math.ceil( numberOfImages / settings.numberOfImagesInSection) :  Math.ceil( numberOfImages / 12 ),
+			endOfSection = ( $( "#photo-gallery" ).hasClass("filmstrip-view") ) ? Math.ceil( numberOfImages / settings.numberOfImagesInSection) :  Math.ceil( numberOfImages / settings.numberOfImagesInThumnailSection ),
 			imageElements =[],
 			actualSizeOfThumbailScroller = $(".gallery-thumb").width() / endOfSection ,
 			imageObject = new Image(),
@@ -49,7 +50,7 @@ try {
 				"</span> <!-- End of page-indication container -->" +
 				"<span class='unit next-section'> <img alt='Next Section' title='Next Section' src='assets/img/next.png' > </span>" +
 				"</div>" +
-			"</div>",
+				"</div>",
 			$alternateViewTemplate = "<div class='line gallery-header lightBlue' >" +
 				"<div class='unit gallery-title'> Photo Gallery </div>" +
 			 	"<div class='colRight alternate-view'> <!-- Beginning of alternate view container-->" +
@@ -83,7 +84,7 @@ try {
 							
 					for ( var i = 0; i < defaults.numberOfImagesInGroup; i++ ) { // Iterate over all images on the thumbnail list 
 								
-						if ( currentImageOnStage == imageElements[ i ] ) { // Check if the current image on the stage is found on the image element array 
+						if ( currentImageOnStage == imageElements[ i ].src ) { // Check if the current image on the stage is found on the image element array 
 							return i; // Return the index of the current image on the stage that is found on the image element array
 						}
 				
@@ -102,7 +103,7 @@ try {
 					}, speed );
 				},
 				reinitializeEndOfSection: function() { // Reinitialize the value of endOfSection property
-					defaults.endOfSection = ( $( "#photo-gallery" ).hasClass("filmstrip-view") ) ? Math.ceil( numberOfImages / settings.numberOfImagesInSection ) : Math.ceil( numberOfImages / 12 );	
+					defaults.endOfSection = ( $( "#photo-gallery" ).hasClass("filmstrip-view") ) ? Math.ceil( numberOfImages / settings.numberOfImagesInSection ) : Math.ceil( numberOfImages / settings.numberOfImagesInThumnailSection );	
 				},
 				assignNewWidthToGalleryThumb: function() {
 					
@@ -144,15 +145,41 @@ try {
 					});
 					
 				},
+				printImageArrayValues: function (array) {
+					for (var i=0; i < array.length; i++) {
+						console.log("Array src : "+array[i].src);
+						console.log("Array title : "+array[i].title);
+						console.log("Array class : "+array[i].className);
+						console.log("Array group : "+array[i].group);
+						
+					}
+				},
 				assignImagesIntoArray: function() { // Get all images src and assign it into imageElement array 
 							
 					imagesOnStage.each( function( i ) {
-						imageElements[ i ] = $(this).attr("href");
+						var imageObject = {
+							src: $(this).attr("href") || '',
+							title: $(this).children().attr("title") || '',
+							className: $(this).attr("class") || '',
+							group: $(this).attr("rel")
+						};
+						imageElements[ i ] = imageObject;
 					});
+					
+					methods.printImageArrayValues(imageElements);
 							
 					imagesOnThumbnailView.each( function( i ) {
-						imageElements[ i ] = $(this).attr("href");
+						var imageObject = {
+							src: $(this).attr("href") || '',
+							title: $(this).children().attr("title") || '',
+							className: $(this).attr("class") || '',
+							group: $(this).attr("rel")
+						};
+						
+						imageElements[ i ] = imageObject;
 					});
+					
+					methods.printImageArrayValues(imageElements);
 					
 				},
 				showSectionPageIndicator: function() {
@@ -227,19 +254,20 @@ try {
 						if ( defaults.currentImageIndex <= endOfImageSection ) { // Check if the current image index in not exceeding the last index of current image section
 									
 							if ( $( "#photo-gallery" ).hasClass("filmstrip-view") ) { // Check if the photo-gallery is in filmstrip mode 
-								methods.showGalleryViewer( imageElements[ defaults.currentImageIndex ] ); // Call the showGalleryViewer method for filmstrip mode
+								methods.showGalleryViewer( imageElements[ defaults.currentImageIndex ].src ); // Call the showGalleryViewer method for filmstrip mode
 							} else if ( $( "#photo-gallery" ).hasClass( "thumbnail-view" ) ) { // Check if the photo-gallery is in thumbnail-view mode 
-								methods.showGalleryViewer( imageElements[ defaults.currentImageIndex ] ) // Call the showGalleryViewer method for thumbnail-view mode
+								methods.showGalleryViewer( imageElements[ defaults.currentImageIndex ].src ) // Call the showGalleryViewer method for thumbnail-view mode
 							}
 						
 						} else { // If the current image index is exceeding the last index of the current image section then apply the following code 
 							methods.moveToNextSection(); // Move the image sction to the next section
 							defaults.beginOfImageSection += settings.numberOfImagesInSection; // Change the value of beginOfImageSection to the new value based on the numberOfImagesInSection
-							methods.showGalleryViewer( imageElements[ defaults.currentImageIndex ] ); // Then show the new image on the stage by calling showGalleryViewer method
+							methods.showGalleryViewer( imageElements[ defaults.currentImageIndex ].src ); // Then show the new image on the stage by calling showGalleryViewer method
 						}
 							
 					activedImage = methods.getActivedImage(); // Get the current active image 
-					methods.activateImage( "next" ); // Activate the next image 
+					methods.activateImage( "next" ); // Activate the next image	
+					 
 								
 					} else { // If the current image index is equal to the last index of the end of image section return nothing
 						return;
@@ -260,11 +288,11 @@ try {
 						defaults.currentImageIndex -= 1;	
 						if ( defaults.currentImageIndex  >= beginOfImageSection ) {
 									
-							methods.showGalleryViewer( imageElements[ defaults.currentImageIndex ] );
+							methods.showGalleryViewer( imageElements[ defaults.currentImageIndex ].src );
 						
 						} else {
 							methods.moveToPrevSection();
-							methods.showGalleryViewer( imageElements[ defaults.currentImageIndex ] );
+							methods.showGalleryViewer( imageElements[ defaults.currentImageIndex ].src );
 							activedImage = methods.getActivedImage();	
 									
 						}
@@ -304,7 +332,13 @@ try {
 				activateImage: function( type ) {
 							
 					if (type == "next" ) {
-						if ($(".photo-gallery").hasClass("thumbnail-view")) {
+						if ($( "#photo-gallery" ).hasClass( "thumbnail-view" )) {
+							
+							var nextImage = methods.getCurrentImage();
+							console.log("The value of nextImage is : "+nextImage);
+							methods.showImageTitle( imageElements[nextImage].title);
+							console.log("The next image title is " + imageElements[nextImage].title );
+							
 							
 						} else {
 							this.showActiveImage( activedImage.next() );
@@ -312,7 +346,12 @@ try {
 						}
 						
 					} else if ( type == "prev" ) {
-						if ($(".photo-gallery").hasClass("thumbnail-view")) {
+						if ($( "#photo-gallery" ).hasClass( "thumbnail-view" )) {
+							
+							var prevImage = methods.getCurrentImage();
+							console.log("The value of nextImage is : "+prevImage);
+							methods.showImageTitle( imageElements[prevImage].title);
+							console.log("The next image title is " + imageElements[prevImage].title );
 							
 						} else {
 							this.showActiveImage( activedImage.prev() );
@@ -346,6 +385,7 @@ try {
 					
 					clicked = true;
 					methods.showGalleryViewer( $(this).attr("href") );
+					methods.showImageTitle($(this));
 					return false;
 					
 				},
@@ -384,7 +424,7 @@ try {
 					/* New code */
 					
 					var templateIndex = 0, // This variable to stroe the index of template 
-						numberOfTemplates = numberOfImages / 12, // This variable to store the number of templates for thumbnails' images
+						numberOfTemplates = numberOfImages / settings.numberOfImagesInThumnailSection, // This variable to store the number of templates for thumbnails' images
 						templateArray = [],
 						maxHeight = 0;
 					
@@ -401,7 +441,7 @@ try {
 							if ( i == 0 ) {
 								$(this).attr( "class", "thumbList-image" );		
 							}
-							if (i % 12 === 0 && i !=0) {
+							if (i % settings.numberOfImagesInThumnailSection === 0 && i !=0) {
 								templateIndex++;
 							}
 							

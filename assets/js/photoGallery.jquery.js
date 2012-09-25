@@ -8,7 +8,8 @@ try {
 		var	settings = {
 				sectTransition: 500,
 				numberOfImagesInSection: 10,
-				numberOfImagesInThumnailSection: 30
+				numberOfImagesInThumnailSection: 30,
+				galleryViewMode: "filmStrip"
 			},
 			numberOfImages = $( ".gallery-thumb" ).find("img").length || $( ".gallery-thumbList" ).find("img").length,
 			sizeOfThumbnail = 100 / settings.numberOfImagesInSection,
@@ -656,7 +657,12 @@ try {
 				}
 				 
 				methods.init(); // Initialize the photo gallery
-				methods.switchToThumbnailView();
+				if ( settings.galleryViewMode == "thumbnailList") {
+					methods.switchToThumbnailView();	
+				} else {
+					methods.switchToFilmstripView();
+				}
+				
 			});
 			
 		};
